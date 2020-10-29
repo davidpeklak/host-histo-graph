@@ -1,0 +1,7 @@
+.idea/*
+.terraform/*
+credentials.json
+playbooks/hosts
+terraform.*
+terrakey*
+playbooks/files/server.key
