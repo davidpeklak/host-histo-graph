@@ -31,7 +31,7 @@ resource "google_compute_instance" "vm_instance" {
   }
 
   metadata = {
-    ssh-keys = "dpeklak:${file("terrakey.pub")}"
+    ssh-keys = "dpeklak:${file("../terrakey.pub")}"
   }
 }
 
@@ -67,14 +67,4 @@ resource "google_dns_record_set" "cname" {
   type         = "CNAME"
   ttl          = 300
   rrdatas      = ["${google_dns_managed_zone.peklak.dns_name}"]
-}
-
-output "vm_public_ip" {
-  value       = google_compute_instance.vm_instance.network_interface.0.access_config.0.nat_ip
-  description = "Public ip of vm"
-}
-
-output "name_servers" {
-  value       = google_dns_managed_zone.peklak.name_servers
-  description = "Name servers"
 }
