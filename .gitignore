@@ -5,9 +5,9 @@ server.csr
 
 terrakey*
 
-terraform/.terraform/*
+terraform/*/.terraform/*
 terraform/credentials.json
-terraform/terraform.tfstate*
+terraform/*/terraform.tfstate*
 
 ansible/hosts
 ansible/files/server.key

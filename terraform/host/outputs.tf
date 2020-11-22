@@ -3,6 +3,11 @@ output "vm_public_ip" {
   description = "Public ip of vm"
 }
 
+output "vm_id" {
+  value       = google_compute_instance.vm_instance.id
+  description = "id of vm"
+}
+
 output "name_servers" {
   value       = google_dns_managed_zone.peklak.name_servers
   description = "Name servers"

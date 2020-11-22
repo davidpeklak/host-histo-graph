@@ -2,6 +2,7 @@ provider "google" {
   project = "mystic-fountain-258616"
   region  = "europe-west6"
   zone    = "europe-west6-a"
+  version = "~> 3.45"
 }
 
 resource "google_dns_managed_zone" "peklak" {
@@ -31,7 +32,7 @@ resource "google_compute_instance" "vm_instance" {
   }
 
   metadata = {
-    ssh-keys = "dpeklak:${file("../terrakey.pub")}"
+    ssh-keys = "dpeklak:${file("../../terrakey.pub")}"
   }
 }
 
