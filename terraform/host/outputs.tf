@@ -1,10 +1,10 @@
-output "vm_public_ip" {
-  value       = google_compute_instance.vm_instance.network_interface.0.access_config.0.nat_ip
+output "host_public_ip" {
+  value       = google_compute_instance.host.network_interface.0.access_config.0.nat_ip
   description = "Public ip of vm"
 }
 
-output "vm_id" {
-  value       = google_compute_instance.vm_instance.id
+output "host_id" {
+  value       = google_compute_instance.host.id
   description = "id of vm"
 }
 

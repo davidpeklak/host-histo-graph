@@ -5,6 +5,14 @@ provider "google" {
   version = "~> 3.45"
 }
 
+data "terraform_remote_state" "service_account" {
+  backend = "local"
+
+  config = {
+    path = "${path.module}/../service-account/terraform.tfstate"
+  }
+}
+
 resource "google_dns_managed_zone" "peklak" {
   name        = "peklak"
   dns_name    = "peklak.ch."
@@ -12,8 +20,8 @@ resource "google_dns_managed_zone" "peklak" {
 }
 
 
-resource "google_compute_instance" "vm_instance" {
-  name         = "terraform-instance"
+resource "google_compute_instance" "host" {
+  name         = "host"
   machine_type = "f1-micro"
 
   tags = ["web"]
@@ -33,6 +41,11 @@ resource "google_compute_instance" "vm_instance" {
 
   metadata = {
     ssh-keys = "dpeklak:${file("../../terrakey.pub")}"
+  }
+
+  service_account {
+    email = data.terraform_remote_state.service_account.outputs.host_service_account_email
+    scopes = ["storage-full"]
   }
 }
 
@@ -59,7 +72,7 @@ resource "google_dns_record_set" "a" {
   type         = "A"
   ttl          = 300
 
-  rrdatas = [google_compute_instance.vm_instance.network_interface.0.access_config.0.nat_ip]
+  rrdatas = [google_compute_instance.host.network_interface.0.access_config.0.nat_ip]
 }
 
 resource "google_dns_record_set" "cname" {
