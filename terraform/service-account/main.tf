@@ -9,3 +9,8 @@ resource "google_service_account" "host_service_account" {
   account_id   = "host-service-account"
   display_name = "Host Service Account"
 }
+
+resource "google_service_account" "build_service_account" {
+  account_id   = "build-service-account"
+  display_name = "Build Service Account"
+}

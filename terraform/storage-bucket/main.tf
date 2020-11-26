@@ -23,10 +23,18 @@ resource "google_storage_bucket" "artifact_store" {
 }
 
 
-resource "google_storage_bucket_iam_binding" "artifact_store_iam_binding" {
+resource "google_storage_bucket_iam_binding" "artifact_store_host_iam_binding" {
   bucket = google_storage_bucket.artifact_store.name
   role = "roles/storage.objectViewer"
   members = [
     "serviceAccount:${data.terraform_remote_state.service_account.outputs.host_service_account_email}",
+  ]
+}
+
+resource "google_storage_bucket_iam_binding" "artifact_store__bulid_iam_binding" {
+  bucket = google_storage_bucket.artifact_store.name
+  role = "roles/storage.objectAdmin"
+  members = [
+    "serviceAccount:${data.terraform_remote_state.service_account.outputs.build_service_account_email}",
   ]
 }
